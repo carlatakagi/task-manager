@@ -10,8 +10,10 @@ namespace TaskManager.Services
 
         public List<TaskModel> GetAllTasks() => _tasks;
 
-        public TaskModel GetTaskById(Guid id) =>
-            _tasks.FirstOrDefault(t => t.Id == id);
+        public TaskModel GetTaskById(Guid id)
+        {
+            return _tasks.FirstOrDefault(t => t.Id == id);
+        }
 
         public void CreateTask(TaskModel task) => _tasks.Add(task);
 
