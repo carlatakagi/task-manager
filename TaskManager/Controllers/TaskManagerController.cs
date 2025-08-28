@@ -1,51 +1,56 @@
+// Controllers/TaskController.cs
 using Microsoft.AspNetCore.Mvc;
+using TaskManager.Models;
+using TaskManager.Services;
 
 namespace TaskManager.Controllers
 {
     [ApiController]
-    [Route("/tasks")]
-    public class TaskManagerController : ControllerBase
+    [Route("api/[controller]")]
+    public class TaskController : ControllerBase
     {
-        private static readonly List<string> Tasks = new()
-        {
-            "Task 1", "Task 2", "Task 3"
-        };
+        private readonly TaskService _taskService;
 
-        private readonly ILogger<TaskManagerController> _logger;
-
-        public TaskManagerController(ILogger<TaskManagerController> logger)
+        public TaskController(TaskService taskService)
         {
-            _logger = logger;
+            _taskService = taskService;
         }
 
-        [HttpGet(Name = "GetTasks")]
-        public IEnumerable<string> Get()
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            return Tasks;
+            return Ok(_taskService.GetAllTasks());
         }
 
-        [HttpPost(Name = "AddTask")]
-        public IActionResult Add([FromBody] string task)
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
         {
-            if (string.IsNullOrWhiteSpace(task))
-            {
-                return BadRequest("Task cannot be empty.");
-            }
-
-            Tasks.Add(task);
-            return Ok();
+            var task = _taskService.GetTaskById(id);
+            if (task == null) return NotFound();
+            return Ok(task);
         }
 
-        [HttpDelete("{taskId}", Name = "DeleteTask")]
-        public IActionResult Delete(int taskId)
+        [HttpPost]
+        public IActionResult Create(TaskModel newTask)
         {
-            if (taskId < 0 || taskId >= Tasks.Count)
-            {
-                return NotFound("Task not found.");
-            }
+            _taskService.CreateTask(newTask);
+            return CreatedAtAction(nameof(GetById), new { id = newTask.Id }, newTask);
+        }
 
-            Tasks.RemoveAt(taskId);
-            return Ok();
+        [HttpPut("{id}")]
+        public IActionResult Update(Guid id, TaskModel updatedTask)
+        {
+            var updated = _taskService.UpdateTask(id, updatedTask);
+            if (!updated) return NotFound();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            var removido = _taskService.Delete(id);
+            if (!removido) return NotFound();
+            return NoContent();
         }
     }
 }
