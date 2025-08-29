@@ -8,7 +8,7 @@
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/carlatakagi/task-manager?color=%2304D361">
   
-  <a href="https://github.com/carlatakagi/task-manager/commits/master">
+  <a href="https://github.com/carlatakagi/task-manager/commits/main">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/carlatakagi/task-manager">
   </a>
     
