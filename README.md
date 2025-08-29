@@ -1,5 +1,3 @@
-# task-manager
-
 <h1 align="center">
      <a href="#" alt="blog"> Task Manager </a>
 </h1>
