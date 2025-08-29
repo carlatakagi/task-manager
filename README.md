@@ -44,7 +44,12 @@ Tabela de conteúdos
 
 ## ⚙️ Habilidades desenvolvidas
 
-- [x] 
+- [x] Construir projeto em camadas (Controller, Models, Service)
+- [x] Criar uma tarefa;
+- [x] Visualizar todas as tarefas criadas;
+- [x] Visualizar uma tarefa buscando pelo seu id;
+- [x] Editar informações de uma tarefa;
+- [x] Excluir uma tarefa.
 
 ---
 
